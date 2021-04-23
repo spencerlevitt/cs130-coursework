@@ -1,16 +1,79 @@
-/* You're welcome to change any of this! */
+@import url("https://fonts.googleapis.com/css2?family=Arimo:wght@600&display=swap");
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0px;
-  font-family: Arial, sans-serif;
+  font-family: "Montserrat", sans-serif;
+  background-image: url("./assets/jill-heyer-03ztkGdYWU8-unsplash.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+header {
+  background-color: slategrey;
+  color: #f0f0f0;
 }
 header,
 section {
   padding: 20px;
 }
+
+#nav-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#link-header {
+  margin-right: 35px;
+  background-color: black;
+  padding: 50px;
+  border-radius: 10px;
+  color: wheat;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+#link-subheader > a,
+#link-subheader > a:link,
+#link-subheader > a:visited {
+  color: #fffafa;
+  text-decoration: none;
+}
+
+#link-subheader {
+  margin-right: 35px;
+  background-color: rgb(55, 55, 55);
+  padding: 50px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 25px;
+  color: papayawhip;
+}
+
+#link > a,
+#link > a:link,
+#link > a:visited {
+  color: darkblue;
+  text-decoration: none;
+}
+
+#link {
+  margin-right: 35px;
+  background-color: aliceblue;
+  padding: 50px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  background-color: aliceblue;
+}
+
+#homework {
+}
+
 p,
 li {
   line-height: 1.5em;
