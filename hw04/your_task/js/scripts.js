@@ -17,6 +17,26 @@ const search = (ev) => {
   }
 };
 
+const attachTrackHandlers = () => {
+  const tracks = document
+    .getElementById("tracks")
+    .querySelectorAll(".track-item");
+  console.log(tracks.length);
+  tracks.forEach((track) => {
+    track.addEventListener("click", (event) => {
+      const trackPreviewContainer = document
+        .querySelector("footer")
+        .getElementsByClassName("track-item")[0];
+      trackPreviewContainer.innerHTML = `${event.currentTarget.innerHTML}`;
+
+      const songUrl = event.currentTarget.getAttribute("data-preview-track");
+      audioPlayer.setAudioFile(songUrl);
+
+      audioPlayer.play();
+    });
+  });
+};
+
 const getTracks = (term) => {
   console.log(`
         get tracks from spotify based on the search term
@@ -27,7 +47,6 @@ const getTracks = (term) => {
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       const size = 5;
       const items = data.slice(0, size).map((i) => {
         return `<section class="track-item preview" data-preview-track="${i.preview_url}">
@@ -41,7 +60,11 @@ const getTracks = (term) => {
     </div>
 </section>`;
       });
-      document.getElementById("tracks").innerHTML = `${items.join(" ")}`;
+      document.getElementById("tracks").innerHTML =
+        items.length > 0 ? `${items.join(" ")}` : `<p>No tracks found</p>`;
+    })
+    .then(() => {
+      attachTrackHandlers();
     });
 };
 
@@ -50,6 +73,27 @@ const getAlbums = (term) => {
         get albums from spotify based on the search term
         "${term}" and load them into the #albums section 
         of the DOM...`);
+  fetch(
+    `https://www.apitutor.org/spotify/simple/v1/search?type=album&q=${term}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      const items = data.map((i) => {
+        return `<section class="album-card" id="${i.id}">
+              <div>
+                  <img src="${i.image_url}">
+                  <h3>${i.name}</h3>
+                  <div class="footer">
+                      <a href="${i.spotify_url}" target="_blank">
+                          view on spotify
+                      </a>
+                  </div>
+              </div>
+          </section>`;
+      });
+      document.getElementById("albums").innerHTML =
+        items.length > 0 ? `${items.join(" ")}` : `<p>No albums found</p>`;
+    });
 };
 
 const getArtist = (term) => {
@@ -62,7 +106,6 @@ const getArtist = (term) => {
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       if (data.length > 0) {
         const elem = data[0];
         document.getElementById("artist").innerHTML = `
